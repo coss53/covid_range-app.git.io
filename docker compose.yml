@@ -9,15 +9,17 @@ services:
       - .:/var/www/html
     depends_on:
       - db
+    environment:
+      DATABASE_URL: postgresql://covid_range_user:bwIUYLuFto9IBUg55LJAAzHs0sbD7qSJ@db:5432/covid_range
 
   db:
-    image: postgis/postgis:15-3.3
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: covid_range
+    image: postgis/postgis:16
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER: covid_range_user
+      POSTGRES_PASSWORD: bwIUYLuFto9IBUg55LJAAzHs0sbD7qSJ
+      POSTGRES_DB: covid_range
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
